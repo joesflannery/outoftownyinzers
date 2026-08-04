@@ -37,7 +37,10 @@ def _format_when(iso_date):
 
 
 def _get_json(url):
-    resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"}, timeout=8)
+    # No custom User-Agent here on purpose -- ESPN's endpoint 403s on a
+    # "Mozilla/..."-style header (even a fully realistic one) but accepts
+    # requests' own default, so overriding it does more harm than good.
+    resp = requests.get(url, timeout=8)
     resp.raise_for_status()
     return resp.json()
 

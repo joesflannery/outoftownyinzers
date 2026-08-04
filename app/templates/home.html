@@ -2,21 +2,6 @@
 {% block title %}Out of Town Yinzers -- Pittsburgh Sports Podcast{% endblock %}
 {% block content %}
 
-<section class="hero-banner">
-    <h1>Out of Town Yinzers Podcast</h1>
-    <p class="hero-subtitle">Pittsburgh sports coverage for Yinzers everywhere -- Steelers, Pirates, Penguins, and Pitt Athletics.</p>
-    <div class="hero-ctas">
-        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
-        {% if spotify_url %}<a class="btn secondary" href="{{ spotify_url }}" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>{% endif %}
-        {% if apple_podcasts_url %}<a class="btn secondary" href="{{ apple_podcasts_url }}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts</a>{% endif %}
-    </div>
-</section>
-
-<div class="merch-teaser">
-    <span>New merch is here -- hats, tees, and more.</span>
-    <a class="btn secondary" href="{{ url_for('shop.index') }}">Shop Now &rarr;</a>
-</div>
-
 {% if upcoming_games %}
 <div class="scoreboard-strip">
     {% for game in upcoming_games %}
@@ -39,13 +24,16 @@
 <p class="empty-state">No upcoming games scheduled right now -- check back soon.</p>
 {% endif %}
 
-<div class="follow-cta">
-    <p>Never miss an episode -- follow along everywhere we post.</p>
-    <div class="follow-cta-actions">
-        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
-        {% include "_social_links.html" %}
+<section class="hero-banner">
+    <img class="hero-logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Out of Town Yinzers">
+    <h1>Out of Town Yinzers Podcast</h1>
+    <p class="hero-subtitle">Pittsburgh sports coverage for Yinzers everywhere -- Steelers, Pirates, Penguins, and Pitt Athletics.</p>
+    <div class="hero-ctas">
+        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+        {% if spotify_url %}<a class="btn secondary" href="{{ spotify_url }}" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>{% endif %}
+        {% if apple_podcasts_url %}<a class="btn secondary" href="{{ apple_podcasts_url }}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts</a>{% endif %}
     </div>
-</div>
+</section>
 
 <div class="video-links-row">
     <div class="video-col">
@@ -102,6 +90,14 @@
     </aside>
 </div>
 
+<div class="follow-cta">
+    <p>Never miss an episode -- follow along everywhere we post.</p>
+    <div class="follow-cta-actions">
+        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
+        {% include "_social_links.html" %}
+    </div>
+</div>
+
 <div class="section-title">
     <h2>News</h2>
     <a href="{{ url_for('news.index') }}">See all &rarr;</a>
@@ -129,6 +125,11 @@
 {% else %}
 <p class="empty-state">No news yet -- visit the <a href="{{ url_for('news.index') }}">News</a> page and hit refresh.</p>
 {% endif %}
+
+<div class="merch-teaser">
+    <span>New merch is here -- hats, tees, and more.</span>
+    <a class="btn secondary" href="{{ url_for('shop.index') }}">Shop Now &rarr;</a>
+</div>
 
 <div class="section-title">
     <h2>Merch</h2>
