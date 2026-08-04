@@ -13,6 +13,16 @@ all for now; there's no reliable automated way to judge "is this other-sport
 story actually noteworthy," so that's left as a manual call (e.g. write a
 blog post about it) rather than guessed at here.
 
+Quality filtering for the two Google News teams: Penguins coverage is
+restricted to a source allowlist (_ALLOWED_SOURCES) since open Google News
+search pulls in low-quality secondary aggregators (Times of India picking
+up NHL rumors, content-farm sites, etc.) alongside real Pittsburgh outlets.
+Pitt's coverage overwhelmingly comes from pittsburghpanthers.com itself
+(the team's own site, legitimately indexed), so an allowlist wouldn't help
+there -- instead _TITLE_EXCLUDES filters out that site's routine practice-
+report posts ("Wraps Up Practice No. 13", "Completes Seventh Spring
+Practice"), which are real but not actually newsworthy.
+
 Images: Steelers' feed includes a real per-story photo via <media:content>,
 which feedparser parses natively. Pirates' feed has one too, but via a
 nonstandard <image href="..."> tag feedparser doesn't recognize, so that's
@@ -28,6 +38,7 @@ podcast site aggregating headlines with links back to the original source.
 import difflib
 import re
 
+import click
 import feedparser
 import requests
 
@@ -53,6 +64,37 @@ _SOURCES = {
         (_GOOGLE_NEWS.format(query="Pitt+Panthers+football"), 0, "pitt"),
         (_GOOGLE_NEWS.format(query="Pitt+Panthers+men%27s+basketball"), 1, "pitt"),
         (_GOOGLE_NEWS.format(query="Pitt+Panthers+women%27s+volleyball"), 2, "pitt"),
+    ],
+}
+
+# Known-good outlets for teams sourced from open Google News search --
+# anything not in this list gets skipped for that team. Lowercased for
+# case-insensitive matching against feedparser's entry.source.title.
+_ALLOWED_SOURCES = {
+    "Penguins": {
+        "pittsburgh hockey now",
+        "pensburgh",
+        "nhl.com",
+        "pittsburgh post-gazette",
+        "the hockey writers",
+        "the hockey news",
+        "the athletic",
+        "espn",
+        "triblive.com",
+        "pittsburgh tribune-review",
+        "the new york times",
+        "dk pittsburgh sports",
+    },
+}
+
+# team -> list of lowercased phrases; a title containing any of these gets
+# skipped for that team (routine/low-value posts, not actual news).
+_TITLE_EXCLUDES = {
+    "Pitt": [
+        "spring practice",
+        "practice no.",
+        "wraps up practice",
+        "training camp report",
     ],
 }
 
@@ -114,6 +156,9 @@ def refresh_team(team):
         )
     }
 
+    allowed_sources = _ALLOWED_SOURCES.get(team)
+    title_excludes = _TITLE_EXCLUDES.get(team, [])
+
     added = 0
     for url, priority, required_keyword in _SOURCES[team]:
         parsed = feedparser.parse(url)
@@ -126,12 +171,17 @@ def refresh_team(team):
                 continue
             if required_keyword and required_keyword not in title.lower():
                 continue
+            if title_excludes and any(kw in title.lower() for kw in title_excludes):
+                continue
+
+            source = entry.get("source", {}).get("title") if entry.get("source") else None
+            if allowed_sources is not None and (not source or source.lower() not in allowed_sources):
+                continue
 
             normalized = _normalize_title(title)
             if _is_near_duplicate(normalized, seen_normalized):
                 continue
 
-            source = entry.get("source", {}).get("title") if entry.get("source") else None
             published_at = entry.get("published", "")
             image = _image_for_entry(team, url, entry) or mlb_images.get(link)
             cur = db.execute(
@@ -148,3 +198,17 @@ def refresh_team(team):
 
 def refresh_all():
     return {team: refresh_team(team) for team in TEAMS}
+
+
+@click.command("refresh-news")
+def refresh_news_command():
+    """Fetch fresh headlines for all teams -- meant to be run on a schedule
+    (e.g. a PythonAnywhere scheduled task) so the News page doesn't rely on
+    someone remembering to click "Refresh headlines" in the browser."""
+    results = refresh_all()
+    total = sum(results.values())
+    click.echo(f"Added {total} new headline(s): " + ", ".join(f"{t} +{n}" for t, n in results.items()))
+
+
+def init_app(app):
+    app.cli.add_command(refresh_news_command)

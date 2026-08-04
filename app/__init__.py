@@ -24,6 +24,9 @@ def create_app():
     from . import db
     db.init_app(app)
 
+    from . import news_fetch
+    news_fetch.init_app(app)
+
     from .routes import main, news, blog, shop, episodes
     app.register_blueprint(main.bp)
     app.register_blueprint(news.bp)

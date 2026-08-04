@@ -110,6 +110,22 @@ Google Domains, etc.):
    certificate for the custom domain -- there's a checkbox for that on
    the same Web tab domain settings.
 
+## Automating the news refresh
+
+Headlines don't update on their own -- something has to actually call the
+refresh. Instead of relying on clicking "Refresh headlines" in the browser,
+set up a PythonAnywhere scheduled task to do it automatically:
+
+1. **Tasks** tab → add a new scheduled task.
+2. Pick a time (a couple times a day is plenty -- e.g. 8:00 and 16:00).
+3. Command:
+   ```
+   /home/YOURUSERNAME/.virtualenvs/yinzers-venv/bin/flask --app /home/YOURUSERNAME/yinzers/run.py refresh-news
+   ```
+4. Save. PythonAnywhere's free tier includes one daily scheduled task --
+   check the Tasks tab for what your plan allows if you want more than one
+   run a day.
+
 ## Pushing future updates
 
 ```
