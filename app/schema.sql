@@ -19,9 +19,3 @@ CREATE TABLE IF NOT EXISTS news_items (
     image TEXT,
     UNIQUE(team, link)
 );
-
-CREATE TABLE IF NOT EXISTS newsletter_signups (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE,
-    created_at TEXT NOT NULL DEFAULT (datetime('now'))
-);

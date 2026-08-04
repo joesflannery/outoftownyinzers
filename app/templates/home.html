@@ -23,13 +23,9 @@
 {% endif %}
 
 <div class="follow-cta">
-    <p>Never miss an episode -- get new posts by email, or follow along everywhere we post.</p>
+    <p>Never miss an episode -- follow along everywhere we post.</p>
     <div class="follow-cta-actions">
-        <form class="email-signup-form" action="{{ url_for('main.subscribe') }}" method="post">
-            <input type="email" name="email" placeholder="you@email.com" required>
-            <button class="btn" type="submit">Get Email Updates</button>
-        </form>
-        <a class="btn secondary" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
         {% include "_social_links.html" %}
     </div>
 </div>

@@ -347,45 +347,6 @@ main {
     flex-wrap: wrap;
 }
 
-.email-signup-form {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.email-signup-form input[type="email"] {
-    padding: 0.55rem 0.75rem;
-    background: var(--yz-black);
-    border: 1px solid #333;
-    border-radius: 6px;
-    color: var(--yz-white);
-    font-family: inherit;
-    font-size: 0.9rem;
-    width: 200px;
-}
-
-.email-signup-form input[type="email"]::placeholder {
-    color: var(--yz-gray);
-}
-
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.admin-table th,
-.admin-table td {
-    text-align: left;
-    padding: 0.6rem 0.75rem;
-    border-bottom: 1px solid #2a3542;
-}
-
-.admin-table th {
-    color: var(--yz-gold);
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-
 .twitter-embed-wrap {
     margin-top: 1.25rem;
 }
