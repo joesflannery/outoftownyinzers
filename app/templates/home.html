@@ -25,7 +25,6 @@
 {% endif %}
 
 <section class="hero-banner">
-    <img class="hero-logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Out of Town Yinzers">
     <h1>Out of Town Yinzers Podcast</h1>
     <p class="hero-subtitle">Pittsburgh sports coverage for Yinzers everywhere -- Steelers, Pirates, Penguins, and Pitt Athletics.</p>
     <div class="hero-ctas">
@@ -34,6 +33,11 @@
         {% if apple_podcasts_url %}<a class="btn secondary" href="{{ apple_podcasts_url }}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts</a>{% endif %}
     </div>
 </section>
+
+<div class="merch-teaser">
+    <span>New merch is here -- hats, tees, and more.</span>
+    <a class="btn secondary" href="{{ url_for('shop.index') }}">Shop Now &rarr;</a>
+</div>
 
 <div class="video-links-row">
     <div class="video-col">
@@ -124,11 +128,6 @@
 {% else %}
 <p class="empty-state">No news yet -- check back soon.</p>
 {% endif %}
-
-<div class="merch-teaser">
-    <span>New merch is here -- hats, tees, and more.</span>
-    <a class="btn secondary" href="{{ url_for('shop.index') }}">Shop Now &rarr;</a>
-</div>
 
 <div class="section-title">
     <h2>Merch</h2>
