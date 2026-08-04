@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Shop -- Out of Town Yinzers{% endblock %}
+{% block content %}
+<div class="section-title">
+    <h2>Shop</h2>
+    <a class="btn secondary" href="{{ store_url }}" target="_blank" rel="noopener">View Full Store &rarr;</a>
+</div>
+
+{% if products %}
+<div class="card-grid">
+    {% for product in products %}
+    <div class="card product-card">
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" onerror="this.style.display='none'">
+        <h3>{{ product.name }}</h3>
+        <div class="meta">{{ product.price }}</div>
+        <a class="btn" href="{{ product.buy_url }}" target="_blank" rel="noopener">Buy Now</a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="empty-state">No products listed yet -- check back soon.</p>
+{% endif %}
+{% endblock %}

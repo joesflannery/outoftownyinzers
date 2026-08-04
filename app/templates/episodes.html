@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Episodes -- Out of Town Yinzers{% endblock %}
+{% block content %}
+<div class="section-title">
+    <h2>Episodes</h2>
+    <a class="btn secondary" href="https://www.youtube.com/@OutofTownYinzers" target="_blank" rel="noopener">Full Channel on YouTube &rarr;</a>
+</div>
+<p class="episodes-note">Recent full episodes -- YouTube only gives us the last 15 uploads total (Shorts included), so this covers what's most recent, not the full back catalog.</p>
+
+{% if episodes %}
+<div class="card-grid">
+    {% for ep in episodes %}
+    <a class="video-box episode-card" href="{{ ep.url }}" target="_blank" rel="noopener">
+        {% if ep.thumbnail %}<img src="{{ ep.thumbnail }}" alt="{{ ep.title }}">{% endif %}
+        <div class="video-box-title">{{ ep.title }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p class="empty-state">No full episodes found in the recent uploads -- check the channel directly.</p>
+{% endif %}
+{% endblock %}

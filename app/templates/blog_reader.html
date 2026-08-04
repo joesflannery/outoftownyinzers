@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ post['title'] ~ ' -- ' if post else '' }}Blog -- Out of Town Yinzers{% endblock %}
+{% block content %}
+<div class="blog-layout">
+    <aside class="blog-sidebar">
+        <div class="section-title small"><h2>Posts</h2></div>
+        <a class="btn secondary blog-new-btn" href="{{ url_for('blog.new') }}">New Post</a>
+        {% if all_posts %}
+        <ul class="blog-post-list">
+            {% for p in all_posts %}
+            <li>
+                <a href="{{ url_for('blog.post', post_id=p['id']) }}" class="{{ 'active' if post and p['id'] == post['id'] }}">
+                    <div class="blog-post-list-title">{{ p['title'] }}</div>
+                    <div class="blog-post-list-date">{{ p['created_at'][:10] }}</div>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="empty-state small">No posts yet.</p>
+        {% endif %}
+    </aside>
+
+    <div class="blog-main">
+        {% if post %}
+        <div class="blog-bio-card">
+            <img class="blog-bio-photo" src="{{ url_for('static', filename='img/blog/joe-bio.jpg') }}" alt="Joe Flannery">
+            <div class="blog-bio-text">
+                <div class="blog-bio-label">About the Author</div>
+                <p>Joe Flannery is born and raised in Pittsburgh and a lifelong Pittsburgh sports fan -- through the ups and the downs. He holds a bachelor's degree in Journalism, and this blog is him finally putting it to use.</p>
+            </div>
+        </div>
+
+        <div class="blog-post-header">
+            <h1>{{ post['title'] }}</h1>
+            <div class="meta">{{ post['author'] }} &middot; {{ post['created_at'][:10] }}</div>
+        </div>
+
+        <div class="blog-post-body">{{ post['body'] }}</div>
+
+        <div class="blog-post-actions">
+            <a class="btn secondary" href="{{ url_for('blog.edit', post_id=post['id']) }}">Edit</a>
+            <form action="{{ url_for('blog.delete', post_id=post['id']) }}" method="post" onsubmit="return confirm('Delete this post?');">
+                <button class="btn secondary" type="submit">Delete</button>
+            </form>
+        </div>
+        {% else %}
+        <p class="empty-state">No posts yet -- check back soon.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
