@@ -34,12 +34,12 @@
     <div class="video-col">
         {% if main_video %}
         <div class="video-embed">
-            <iframe src="https://www.youtube.com/embed/{{ main_video.id }}" title="{{ main_video.title }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="main-video-iframe" src="https://www.youtube.com/embed/{{ main_video.id }}" title="{{ main_video.title }}" data-video-id="{{ main_video.id }}" data-video-title="{{ main_video.title | e }}" data-video-thumbnail="{{ main_video.thumbnail }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         {% if more_videos %}
-        <div class="video-box-row">
+        <div class="video-box-row" id="video-box-row">
             {% for video in more_videos %}
-            <a class="video-box" href="{{ video.url }}" target="_blank" rel="noopener">
+            <a class="video-box" href="{{ video.url }}" target="_blank" rel="noopener" data-video-id="{{ video.id }}" data-video-title="{{ video.title | e }}" data-video-thumbnail="{{ video.thumbnail }}">
                 {% if video.thumbnail %}<img src="{{ video.thumbnail }}" alt="{{ video.title }}">{% endif %}
                 <div class="video-box-title">{{ video.title }}</div>
             </a>
@@ -123,4 +123,5 @@
 {% else %}
 <p class="empty-state">No products listed yet -- check back soon.</p>
 {% endif %}
+<script src="{{ url_for('static', filename='js/video-swap.js') }}"></script>
 {% endblock %}
