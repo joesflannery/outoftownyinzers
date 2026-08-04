@@ -14,9 +14,10 @@ site on the same account as your fantasy app -- PythonAnywhere lets one
 account host multiple separate web apps.
 
 You'll need a **paid plan** (Developer, $10/month, is fine) for two
-reasons: outbound internet access (needed for the News page's RSS fetches)
-and custom domain support (needed to point `outoftownyinzers.com` here --
-free accounts are stuck on `yourusername.pythonanywhere.com`).
+reasons: outbound internet access (needed for the homepage's News RSS
+fetches) and custom domain support (needed to point
+`outoftownyinzers.com` here -- free accounts are stuck on
+`yourusername.pythonanywhere.com`).
 
 ## 2. Add a deploy key for this repo
 
@@ -113,8 +114,8 @@ Google Domains, etc.):
 ## Automating the news refresh
 
 Headlines don't update on their own -- something has to actually call the
-refresh. Instead of relying on clicking "Refresh headlines" in the browser,
-set up a PythonAnywhere scheduled task to do it automatically:
+refresh command. Set up a PythonAnywhere scheduled task to do it
+automatically:
 
 1. **Tasks** tab → add a new scheduled task.
 2. Pick a time (a couple times a day is plenty -- e.g. 8:00 and 16:00).
@@ -137,6 +138,8 @@ then hit **Reload** on the Web tab.
 ## Troubleshooting
 
 - **Something won't load**: check the **Error log** link on the Web tab.
-- **News page shows no headlines**: hit "Refresh headlines" on the News
-  page once manually after first deploy -- the cache starts empty.
+- **Homepage News section is empty**: the cache starts empty on first
+  deploy -- run the refresh command once by hand in a Bash console
+  (`workon yinzers-venv` then `flask --app /home/YOURUSERNAME/yinzers/run.py refresh-news`)
+  rather than waiting for the scheduled task's next run.
 - **`git clone` fails**: re-check the deploy key step.

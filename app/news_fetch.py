@@ -1,6 +1,6 @@
-"""Pulls team news into the news_items table so the News page and homepage
-Stories section don't have to hit RSS feeds on every request. Steelers and
-Pirates have real official RSS feeds; Penguins and Pitt don't publish a
+"""Pulls team news into the news_items table so the homepage News section
+doesn't have to hit RSS feeds on every request. Steelers and Pirates have
+real official RSS feeds; Penguins and Pitt don't publish a
 machine-readable feed we could find, so those two fall back to Google News
 search feeds.
 
@@ -203,8 +203,8 @@ def refresh_all():
 @click.command("refresh-news")
 def refresh_news_command():
     """Fetch fresh headlines for all teams -- meant to be run on a schedule
-    (e.g. a PythonAnywhere scheduled task) so the News page doesn't rely on
-    someone remembering to click "Refresh headlines" in the browser."""
+    (e.g. a PythonAnywhere scheduled task) so the homepage News section
+    stays current without anyone needing to trigger it manually."""
     results = refresh_all()
     total = sum(results.values())
     click.echo(f"Added {total} new headline(s): " + ", ".join(f"{t} +{n}" for t, n in results.items()))

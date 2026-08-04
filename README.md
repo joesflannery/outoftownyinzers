@@ -5,15 +5,22 @@ Website for the Out of Town Yinzers podcast (Joe Flannery & Justin Boland)
 
 ## Pages
 
-- **Home** -- hero, latest YouTube upload embed, social links, latest
-  blog/news teasers
-- **News** -- aggregated headlines per team, filterable, manual refresh
-  button (Steelers/Pirates from official team RSS, Penguins/Pitt from
-  Google News search since no official feed was found)
-- **Blog** -- public posts; "New Post"/edit/delete gated behind a shared
-  admin login (see `DEPLOY.md`)
-- **Shop** -- placeholder for now; real merch store is a separate future
-  project
+- **Home** -- scoreboard strip (next game + odds when posted), hero,
+  latest YouTube upload (clicking a secondary video swaps it into the
+  main player instead of leaving the site), latest blog post, aggregated
+  team news, and a merch teaser
+- **Episodes** -- recent full episodes from YouTube (Shorts excluded;
+  YouTube's feed only ever returns the last 15 uploads total, so this is
+  "recent," not a full archive)
+- **Blog** -- public posts with a sidebar post list and an author bio card;
+  "New Post"/edit/delete gated behind a shared admin login (see
+  `DEPLOY.md`)
+- **Shop** -- real products pulled from the Printful store, linking out to
+  Printful for checkout
+
+News headlines (Steelers/Pirates from official team RSS, Penguins/Pitt
+from a filtered Google News search) refresh automatically via a scheduled
+task rather than a manual button -- see `DEPLOY.md`.
 
 ## Running locally
 
@@ -27,15 +34,11 @@ python run.py
 Visit `http://127.0.0.1:5051` (use `127.0.0.1`, not `localhost` -- and note
 port 5060 is blocked by browsers as an unsafe/reserved port, which is why
 this uses 5051 instead). No login is required locally -- the admin gate on
-Blog posting only activates when `ADMIN_USERNAME`/`ADMIN_PASSWORD` are set
-in the environment (see `DEPLOY.md`).
-
-## Still needed before this looks "real"
-
-- Domain registration + PythonAnywhere custom domain setup (see
-  `DEPLOY.md`)
-- Merch shop (separate project)
+Blog posting only activates when `ADMIN_PASSWORD` is set in the
+environment (see `DEPLOY.md`). It's session-based (a real login page at
+`/admin/login`), not a browser popup.
 
 ## Deploying
 
-See `DEPLOY.md` for PythonAnywhere setup instructions.
+See `DEPLOY.md` for PythonAnywhere setup instructions, including the
+scheduled task for automatic news refresh.

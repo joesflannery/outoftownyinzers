@@ -100,7 +100,6 @@
 
 <div class="section-title">
     <h2>News</h2>
-    <a href="{{ url_for('news.index') }}">See all &rarr;</a>
 </div>
 {% if stories_by_team %}
 <div class="stories-strip">
@@ -123,7 +122,7 @@
     {% endfor %}
 </div>
 {% else %}
-<p class="empty-state">No news yet -- visit the <a href="{{ url_for('news.index') }}">News</a> page and hit refresh.</p>
+<p class="empty-state">No news yet -- check back soon.</p>
 {% endif %}
 
 <div class="merch-teaser">
