@@ -16,7 +16,7 @@
 
 {% if main_story %}
 <div class="news-featured-row">
-    <a class="news-main-story" href="{{ main_story['link'] }}" target="_blank" rel="noopener">
+    <a class="news-main-story" href="{{ main_story['link'] }}" target="_blank" rel="noopener noreferrer">
         {% if main_story['image'] %}
         <img src="{{ main_story['image'] }}" alt="{{ main_story['title'] }}">
         {% else %}
@@ -32,7 +32,7 @@
 
     <div class="news-primary-list">
         {% for story in primary_stories %}
-        <a class="news-primary-story" href="{{ story['link'] }}" target="_blank" rel="noopener">
+        <a class="news-primary-story" href="{{ story['link'] }}" target="_blank" rel="noopener noreferrer">
             {% if story['image'] %}
             <img src="{{ story['image'] }}" alt="{{ story['title'] }}">
             {% else %}
@@ -62,7 +62,7 @@
         {% if items %}
         <ul class="stories-list">
             {% for item in items %}
-            <li><a href="{{ item['link'] }}" target="_blank" rel="noopener">{{ item['title'] }}</a></li>
+            <li><a href="{{ item['link'] }}" target="_blank" rel="noopener noreferrer">{{ item['title'] }}</a></li>
             {% endfor %}
         </ul>
         {% else %}

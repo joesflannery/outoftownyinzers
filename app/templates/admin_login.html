@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Admin Login -- Out of Town Yinzers{% endblock %}
+{% block content %}
+<div class="admin-login-wrap">
+    <h1>Admin Login</h1>
+    <p class="meta">Enter the shared admin password to post, edit, or delete blog entries.</p>
+    <form class="stacked" method="post">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autofocus>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button class="btn" type="submit">Log In</button>
+    </form>
+</div>
+{% endblock %}

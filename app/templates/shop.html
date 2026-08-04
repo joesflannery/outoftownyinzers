@@ -3,8 +3,9 @@
 {% block content %}
 <div class="section-title">
     <h2>Shop</h2>
-    <a class="btn secondary" href="{{ store_url }}" target="_blank" rel="noopener">View Full Store &rarr;</a>
+    <a class="btn secondary" href="{{ store_url }}" target="_blank" rel="noopener noreferrer">View Full Store &rarr;</a>
 </div>
+<p class="shop-trust-note">All apparel printed and fulfilled on-demand via Printful.</p>
 
 {% if products %}
 <div class="card-grid">
@@ -13,7 +14,7 @@
         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" onerror="this.style.display='none'">
         <h3>{{ product.name }}</h3>
         <div class="meta">{{ product.price }}</div>
-        <a class="btn" href="{{ product.buy_url }}" target="_blank" rel="noopener">Buy Now</a>
+        <a class="btn" href="{{ product.buy_url }}" target="_blank" rel="noopener noreferrer">Buy Now</a>
     </div>
     {% endfor %}
 </div>

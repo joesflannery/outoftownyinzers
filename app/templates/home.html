@@ -2,6 +2,21 @@
 {% block title %}Out of Town Yinzers -- Pittsburgh Sports Podcast{% endblock %}
 {% block content %}
 
+<section class="hero-banner">
+    <h1>Out of Town Yinzers Podcast</h1>
+    <p class="hero-subtitle">Pittsburgh sports coverage for Yinzers everywhere -- Steelers, Pirates, Penguins, and Pitt Athletics.</p>
+    <div class="hero-ctas">
+        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+        {% if spotify_url %}<a class="btn secondary" href="{{ spotify_url }}" target="_blank" rel="noopener noreferrer">Listen on Spotify</a>{% endif %}
+        {% if apple_podcasts_url %}<a class="btn secondary" href="{{ apple_podcasts_url }}" target="_blank" rel="noopener noreferrer">Listen on Apple Podcasts</a>{% endif %}
+    </div>
+</section>
+
+<div class="merch-teaser">
+    <span>New merch is here -- hats, tees, and more.</span>
+    <a class="btn secondary" href="{{ url_for('shop.index') }}">Shop Now &rarr;</a>
+</div>
+
 {% if upcoming_games %}
 <div class="scoreboard-strip">
     {% for game in upcoming_games %}
@@ -20,12 +35,14 @@
     </div>
     {% endfor %}
 </div>
+{% else %}
+<p class="empty-state">No upcoming games scheduled right now -- check back soon.</p>
 {% endif %}
 
 <div class="follow-cta">
     <p>Never miss an episode -- follow along everywhere we post.</p>
     <div class="follow-cta-actions">
-        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <a class="btn" href="https://www.youtube.com/@OutofTownYinzers?sub_confirmation=1" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a>
         {% include "_social_links.html" %}
     </div>
 </div>
@@ -39,7 +56,7 @@
         {% if more_videos %}
         <div class="video-box-row" id="video-box-row">
             {% for video in more_videos %}
-            <a class="video-box" href="{{ video.url }}" target="_blank" rel="noopener" data-video-id="{{ video.id }}" data-video-title="{{ video.title | e }}" data-video-thumbnail="{{ video.thumbnail }}">
+            <a class="video-box" href="{{ video.url }}" target="_blank" rel="noopener noreferrer" data-video-id="{{ video.id }}" data-video-title="{{ video.title | e }}" data-video-thumbnail="{{ video.thumbnail }}">
                 {% if video.thumbnail %}<img src="{{ video.thumbnail }}" alt="{{ video.title }}">{% endif %}
                 <div class="video-box-title">{{ video.title }}</div>
             </a>
@@ -55,13 +72,15 @@
         <div class="section-title small"><h2>Links</h2></div>
 
         {% if long_form %}
-        <a class="episode-link-card" href="{{ long_form.url }}" target="_blank" rel="noopener">
+        <a class="episode-link-card" href="{{ long_form.url }}" target="_blank" rel="noopener noreferrer">
             {% if long_form.thumbnail %}<img src="{{ long_form.thumbnail }}" alt="{{ long_form.title }}">{% endif %}
             <div class="episode-link-body">
                 <div class="episode-link-label">Latest Full Episode</div>
                 <div class="episode-link-title">{{ long_form.title }}</div>
             </div>
         </a>
+        {% else %}
+        <p class="empty-state small">No episodes found yet.</p>
         {% endif %}
 
         {% if featured_post %}
@@ -71,12 +90,14 @@
             <p>{{ featured_post['body'] | truncate(110) }}</p>
             <span class="featured-post-cta">Read the full post &rarr;</span>
         </a>
+        {% else %}
+        <p class="empty-state small">No blog posts yet.</p>
         {% endif %}
 
         <div class="twitter-embed-wrap">
             <a class="twitter-timeline" data-height="450" data-theme="dark" data-tweet-limit="2" href="https://twitter.com/outtatownyinzer?ref_src=twsrc%5Etfw">Tweets by outtatownyinzer</a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            <a class="btn secondary twitter-fallback" href="https://x.com/outtatownyinzer" target="_blank" rel="noopener">View us on X &rarr;</a>
+            <a class="btn secondary twitter-fallback" href="https://x.com/outtatownyinzer" target="_blank" rel="noopener noreferrer">View us on X &rarr;</a>
         </div>
     </aside>
 </div>
@@ -85,6 +106,7 @@
     <h2>News</h2>
     <a href="{{ url_for('news.index') }}">See all &rarr;</a>
 </div>
+{% if stories_by_team %}
 <div class="stories-strip">
     {% for team, items in stories_by_team.items() %}
     <div class="stories-card">
@@ -95,7 +117,7 @@
         {% if items %}
         <ul class="stories-list">
             {% for item in items %}
-            <li><a href="{{ item['link'] }}" target="_blank" rel="noopener">{{ item['title'] }}</a></li>
+            <li><a href="{{ item['link'] }}" target="_blank" rel="noopener noreferrer">{{ item['title'] }}</a></li>
             {% endfor %}
         </ul>
         {% else %}
@@ -104,6 +126,9 @@
     </div>
     {% endfor %}
 </div>
+{% else %}
+<p class="empty-state">No news yet -- visit the <a href="{{ url_for('news.index') }}">News</a> page and hit refresh.</p>
+{% endif %}
 
 <div class="section-title">
     <h2>Merch</h2>
@@ -116,7 +141,7 @@
         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" onerror="this.style.display='none'">
         <h3>{{ product.name }}</h3>
         <div class="meta">{{ product.price }}</div>
-        <a class="btn" href="{{ product.buy_url }}" target="_blank" rel="noopener">Buy Now</a>
+        <a class="btn" href="{{ product.buy_url }}" target="_blank" rel="noopener noreferrer">Buy Now</a>
     </div>
     {% endfor %}
 </div>

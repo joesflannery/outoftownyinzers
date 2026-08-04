@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 
+from ..auth import check_password
 from ..db import get_db
 from ..merch_products import PRODUCTS as MERCH_PRODUCTS
 from ..news_fetch import TEAMS
@@ -7,6 +8,12 @@ from ..schedule_fetch import get_upcoming_games
 from ..social_feed import get_latest_long_form, get_recent_videos
 
 bp = Blueprint("main", __name__)
+
+# Fill these in once real show links exist -- the Hero CTAs on the
+# homepage only render a button when the corresponding URL is set, so
+# leaving these None just hides that button rather than linking nowhere.
+SPOTIFY_URL = None
+APPLE_PODCASTS_URL = None
 
 
 @bp.route("/")
@@ -37,4 +44,25 @@ def home():
         team_logos=team_logos,
         stories_by_team=stories_by_team,
         merch_products=MERCH_PRODUCTS,
+        spotify_url=SPOTIFY_URL,
+        apple_podcasts_url=APPLE_PODCASTS_URL,
     )
+
+
+@bp.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    next_url = request.values.get("next") or url_for("blog.index")
+    if request.method == "POST":
+        if check_password(request.form.get("password", "")):
+            session["is_admin"] = True
+            flash("Logged in.", "info")
+            return redirect(next_url)
+        flash("Wrong password.", "error")
+    return render_template("admin_login.html", next=next_url)
+
+
+@bp.route("/admin/logout")
+def admin_logout():
+    session.pop("is_admin", None)
+    flash("Logged out.", "info")
+    return redirect(url_for("blog.index"))

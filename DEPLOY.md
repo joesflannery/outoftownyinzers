@@ -62,17 +62,24 @@ path = '/home/YOURUSERNAME/yinzers'
 if path not in sys.path:
     sys.path.insert(0, path)
 
+# Marks this as a real deployment rather than local dev -- without this,
+# the app silently falls back to a hardcoded local-only SECRET_KEY instead
+# of requiring you to set a real one below.
+os.environ['FLASK_ENV'] = 'production'
+
 # Gates just the Blog's "New Post"/"Edit"/"Delete" actions -- reading the
 # site (Home/News/Blog/Shop) stays fully public with no login at all.
-os.environ['ADMIN_USERNAME'] = 'joe'
+# One shared password, not a username/password pair -- give this to
+# Justin too so he can post, rather than making him his own login.
 os.environ['ADMIN_PASSWORD'] = 'choose-a-real-password'
 os.environ['SECRET_KEY'] = 'choose-any-long-random-string'
 
 from run import app as application
 ```
 
-Share the `ADMIN_USERNAME`/`ADMIN_PASSWORD` with Justin so he can post too
--- it's one shared login, not one each.
+Log in at `outoftownyinzers.com/admin/login` with that password to post,
+edit, or delete blog entries -- share the password with Justin so he can
+post too.
 
 ## 7. Set the working directory
 

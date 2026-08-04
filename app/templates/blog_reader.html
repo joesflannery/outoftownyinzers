@@ -5,6 +5,9 @@
     <aside class="blog-sidebar">
         <div class="section-title small"><h2>Posts</h2></div>
         <a class="btn secondary blog-new-btn" href="{{ url_for('blog.new') }}">New Post</a>
+        {% if session.is_admin %}
+        <a class="blog-logout-link" href="{{ url_for('main.admin_logout') }}">Log Out</a>
+        {% endif %}
         {% if all_posts %}
         <ul class="blog-post-list">
             {% for p in all_posts %}
