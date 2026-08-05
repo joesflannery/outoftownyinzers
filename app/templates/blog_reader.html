@@ -4,7 +4,9 @@
 <div class="blog-layout">
     <aside class="blog-sidebar">
         <div class="section-title small"><h2>Posts</h2></div>
+        {% if show_admin_controls %}
         <a class="btn secondary blog-new-btn" href="{{ url_for('blog.new') }}">New Post</a>
+        {% endif %}
         {% if session.is_admin %}
         <a class="blog-logout-link" href="{{ url_for('main.admin_logout') }}">Log Out</a>
         {% endif %}
@@ -41,12 +43,14 @@
 
         <div class="blog-post-body">{{ post['body'] }}</div>
 
+        {% if show_admin_controls %}
         <div class="blog-post-actions">
             <a class="btn secondary" href="{{ url_for('blog.edit', post_id=post['id']) }}">Edit</a>
             <form action="{{ url_for('blog.delete', post_id=post['id']) }}" method="post" onsubmit="return confirm('Delete this post?');">
                 <button class="btn secondary" type="submit">Delete</button>
             </form>
         </div>
+        {% endif %}
         {% else %}
         <p class="empty-state">No posts yet -- check back soon.</p>
         {% endif %}

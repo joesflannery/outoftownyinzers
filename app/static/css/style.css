@@ -145,6 +145,19 @@ main {
     font-size: 0.9rem;
 }
 
+.footer-admin-link {
+    color: var(--yz-gray);
+    font-size: 0.8rem;
+    margin-left: 0.75rem;
+    text-decoration: underline;
+    text-decoration-color: #2a3542;
+}
+
+.footer-admin-link:hover {
+    color: var(--yz-gold);
+    text-decoration-color: var(--yz-gold);
+}
+
 /* Hero */
 .hero-banner {
     text-align: center;

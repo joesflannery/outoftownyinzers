@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 
-from flask import Flask
+from flask import Flask, session
 
 
 def create_app():
@@ -33,8 +33,17 @@ def create_app():
     app.register_blueprint(shop.bp)
     app.register_blueprint(episodes.bp)
 
+    from .auth import admin_password_configured
+
     @app.context_processor
     def inject_current_year():
         return {"current_year": datetime.now().year}
+
+    @app.context_processor
+    def inject_admin_ui():
+        # Mirrors @require_admin's own bypass so the New Post/Edit/Delete
+        # buttons stay visible in local dev, where ADMIN_PASSWORD is unset
+        # and posting is intentionally wide open.
+        return {"show_admin_controls": session.get("is_admin") or not admin_password_configured()}
 
     return app

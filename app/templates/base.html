@@ -47,7 +47,14 @@
 
     <footer class="site-footer">
         <div class="wrap">
-            <div class="footer-tagline">&copy; {{ current_year }} Out of Town Yinzers &mdash; Steelers, Pirates, Penguins &amp; Pitt.</div>
+            <div class="footer-tagline">
+                &copy; {{ current_year }} Out of Town Yinzers &mdash; Steelers, Pirates, Penguins &amp; Pitt.
+                {% if session.is_admin %}
+                <a class="footer-admin-link" href="{{ url_for('main.admin_logout') }}">Log Out</a>
+                {% else %}
+                <a class="footer-admin-link" href="{{ url_for('main.admin_login') }}">Admin Sign In</a>
+                {% endif %}
+            </div>
             {% include "_social_links.html" %}
         </div>
     </footer>
