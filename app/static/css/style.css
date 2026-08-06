@@ -62,7 +62,7 @@ a:hover {
     height: 40px;
     width: 40px;
     aspect-ratio: 1 / 1;
-    border-radius: 8px;
+    object-fit: contain;
     display: block;
 }
 
