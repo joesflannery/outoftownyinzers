@@ -15,6 +15,22 @@ bp = Blueprint("main", __name__)
 SPOTIFY_URL = None
 APPLE_PODCASTS_URL = None
 
+# The homepage shows the full catalog as a scrollable strip, but these lead
+# so the highest-appeal items are visible before anyone scrolls.
+PRIMARY_HOME_PRODUCT_IMAGES = [
+    "bridge-gray-t-shirt.png",
+    "sweatshirt.png",
+    "toddler-tee.png",
+    "trucker-hat.png",
+]
+
+
+def _home_product_order():
+    by_image = {p["image"].rsplit("/", 1)[-1]: p for p in MERCH_PRODUCTS}
+    primary = [by_image[name] for name in PRIMARY_HOME_PRODUCT_IMAGES]
+    rest = [p for p in MERCH_PRODUCTS if p["image"].rsplit("/", 1)[-1] not in PRIMARY_HOME_PRODUCT_IMAGES]
+    return primary + rest
+
 
 @bp.route("/")
 def home():
@@ -43,7 +59,7 @@ def home():
         upcoming_games=upcoming_games,
         team_logos=team_logos,
         stories_by_team=stories_by_team,
-        merch_products=MERCH_PRODUCTS[:4],
+        merch_products=_home_product_order(),
         spotify_url=SPOTIFY_URL,
         apple_podcasts_url=APPLE_PODCASTS_URL,
     )

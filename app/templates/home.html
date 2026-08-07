@@ -134,9 +134,9 @@
     <a class="btn secondary" href="{{ url_for('shop.index') }}">Visit Shop</a>
 </div>
 {% if merch_products %}
-<div class="card-grid">
+<div class="merch-carousel">
     {% for product in merch_products %}
-    <div class="card product-card">
+    <div class="card product-card carousel-card">
         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" onerror="this.style.display='none'">
         <h3>{{ product.name }}</h3>
         <div class="meta">{{ product.price }}</div>
