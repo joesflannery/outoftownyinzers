@@ -8,7 +8,7 @@
 <p class="shop-trust-note">All apparel printed and fulfilled on-demand via Printful.</p>
 
 {% if products %}
-<div class="card-grid">
+<div class="card-grid shop-grid">
     {% for product in products %}
     <div class="card product-card">
         <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" onerror="this.style.display='none'">

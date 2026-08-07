@@ -43,7 +43,7 @@ def home():
         upcoming_games=upcoming_games,
         team_logos=team_logos,
         stories_by_team=stories_by_team,
-        merch_products=MERCH_PRODUCTS,
+        merch_products=MERCH_PRODUCTS[:4],
         spotify_url=SPOTIFY_URL,
         apple_podcasts_url=APPLE_PODCASTS_URL,
     )

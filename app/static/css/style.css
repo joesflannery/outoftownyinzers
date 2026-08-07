@@ -614,6 +614,41 @@ main {
     gap: 1.25rem;
 }
 
+/* Denser grid for the full 11-product shop page -- the default card-grid
+sizing (also used by Episodes) is too spacious once there are more than a
+handful of items. */
+.shop-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 0.85rem;
+}
+
+.shop-grid .card {
+    padding: 0.7rem;
+}
+
+.shop-grid .product-card img {
+    max-width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+}
+
+.shop-grid .card h3 {
+    font-size: 0.85rem;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+}
+
+.shop-grid .card .meta {
+    font-size: 0.78rem;
+    margin-bottom: 0.4rem;
+}
+
+.shop-grid .product-card .btn {
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+}
+
 .card {
     background: var(--yz-black-soft);
     border: 1px solid #2a2a2a;
